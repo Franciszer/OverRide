@@ -12,7 +12,6 @@ void	main(void)
 	bzero(user, 100);
 	bzero(pass, 41);
 	bzero(pass_in, 100);
-
 	if ((file = fopen("/home/users/level03/.pass", "r")) == 0)
 	{
 		fwrite("ERROR: failed to open password file\n", 1, 36, stderr);
