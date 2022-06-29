@@ -2,9 +2,17 @@
 #include <stdlib.h>
 #include <time.h>
 
-void	decrypt()
+void	decrypt(unsigned arg)
 {
+	unsigned	var;		/* ebp-0x0c */
+	char		buf[17];	/* ebp-0x1d */
 
+	var = 20;
+	((unsigned *)buf)[0] = 0x757c7d51U;
+	((unsigned *)buf)[1] = 0x67667360U;
+	((unsigned *)buf)[2] = 0x7b66737eU;
+	((unsigned *)buf)[3] = 0x33617c7dU;
+	buf[16] = 0;
 }
 
 void	test(unsigned in, unsigned b)
@@ -13,16 +21,15 @@ void	test(unsigned in, unsigned b)
 
 	var = b - in;
 	if (var <= 21)
-	{
-
-		*(char *)(0x80489f0 + var * 4);
-	}
-
+		decrypt(0x80489f0 + var << 2);
+	else
+		decrypt(rand());
+	return ;
 }
 
 int	main(void)
 {
-	unsigned	var;
+	unsigned	var;	/* ebp-0xc */
 
 	srand(time(0));
 	puts("***********************************");
