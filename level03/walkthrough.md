@@ -26,5 +26,5 @@ give us back 18. It's also great that 18 is within the range allowed by test().
 We then simply pass that number to the executable via standard input, and cat
 the pass in the resulting shell.
 
-$ echo "322424827" > /tmp/in
-$ (cat /tmp/in; echo "cat /home/users/level04/.pass") | ./level03
+	$ echo "322424827" > /tmp/in
+	$ (cat /tmp/in; echo "cat /home/users/level04/.pass") | ./level03

