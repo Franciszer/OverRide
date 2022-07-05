@@ -2,11 +2,17 @@
 #include <string.h>
 #include <sys/ptrace.h>
 
+typedef unsigned int	u32;
+typedef unsigned long	u64;
+
 unsigned	auth(char *buf, unsigned serial)
 {
-	int			len;	/* ebp-0xc */
-	unsigned	var;	/* ebp-0x10 */
-	int			i;		/* ebp-0x14 */
+	int	len;	/* ebp-0xc */
+	u32	var;	/* ebp-0x10 */
+	int	i;		/* ebp-0x14 */
+
+	u32	tmp;	/* existe pas */
+	u32	tmp2;	/* existe pas */
 
 	buf[strcspn(buf, "\n")] = 0;
 	if ((len = strnlen(buf, 32)) <= 5)
@@ -16,16 +22,26 @@ unsigned	auth(char *buf, unsigned serial)
 		puts("\033[32m.---------------------------.");
 		puts("\033[31m| !! TAMPERING DETECTED !!  |");
 		puts("\033[32m'---------------------------'");
+		/* fucks up your terminal >:c */
 		return (1);
 	}
 	var = ((int)buf[3] ^ 0x1337) + 0x5eeded;
 	i = 0;
 	do
 	{
-		if (buf[i] <= 0x1f)
+		if (buf[i] < ' ')
 			return (1);
+		tmp2 = ((int)buf[i] ^ var);
+		tmp = (u32)(((u64)tmp2 * (u64)0x88233b2b) >> 32);
+		tmp += tmp2;
+		tmp /= 0x800;
+		tmp *= 0x539;
+		var += tmp2 - tmp;
+		++i;
 	} while (i < len);
-	return (0);
+	if (serial == var)
+		return (0);
+	return (1);
 }
 
 int			main(int ac, char **av)
