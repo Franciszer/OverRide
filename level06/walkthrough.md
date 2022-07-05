@@ -25,8 +25,8 @@ peux recuperer le serial qui correspond:
 	$ ./a.out "je bats francois au ping"
 
 Pour cette chaine, le serial est 6246345.
-Notre chaine d'attaque seras donc cette chaine, un \n, puis le serial qu'on
-viens de trouver:
+Notre chaine d'attaque seras donc:
+> [cette chaine]\n[le serial qu'on viens de trouver]\n
 
 	$ echo -en "je bats francois au ping\n6246345\n" > /tmp/in
 	$ (cat /tmp/in; echo "cat /home/users/level07/.pass") | ./level06
