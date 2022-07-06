@@ -3,8 +3,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void    log_wrapper(FILE* file, char* str, __uint64_t u) {
+void    log_wrapper(FILE* file /* rbp - 0x118 */, char* str /* rbp - 0x120 */, __uint64_t u /* rbp - 0x128 */) {
+    char*   ptr; // rbp - 0x8
 
+    rbp = 
 }
 
 int main(int argc /* rbp-0x94 */, char* argv[] /* rbp - 0xa0 */) {
@@ -40,4 +42,5 @@ int main(int argc /* rbp-0x94 */, char* argv[] /* rbp - 0xa0 */) {
         exit(1);
     }
     
+
 }
