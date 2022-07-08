@@ -11,36 +11,51 @@ void    log_wrapper(FILE* file /* rbp - 0x118 */, char* str /* rbp - 0x120 */, _
 
 int main(int argc /* rbp-0x94 */, char* argv[] /* rbp - 0xa0 */) {
 
-    __uint64_t  canary; // rbp -0x8
-    __uint8_t   bt; // rbp - 0x71
-    __uint32_t  dword; // rbp -0x78
-    FILE*       file2; // rbp - 0x80
-    FILE*       file; // rbp - 0x88
+    char        buff[0xff] = "./backups/";
+    __uint32_t  fd; // rbp -0x78
+    FILE*       infile; // rbp - 0x80
+    FILE*       backupfile; // rbp - 0x88
 
-    canary = 0xb5f3c629a160a200;
-    bt = 0xff;
-    dword = 0xffffffff;
+    *buff = 0xff;
+    fd = 0xffffffff;
 
     if (argc != 0x2) {
         printf("Usage: %s filename\n", "/mnt/nfs/homes/frthierr/workspace/OverRide/level08/Ressources/level08");
         exit(1);
     }
 
-    file = fopen("./backups/.log", "w");
+    backupfile = fopen("./backups/.log", "w");
 
-    if (file == NULL) {
+    if (backupfile == NULL) {
         printf("ERROR: Failed to open %s\n", "./backups/.log");
         exit(1);
     }
 
-    log_wrapper(file, "Starting back up: ", argv[1]);
+    log_wrapper(backupfile, "Starting back up: ", argv[1]);
 
-    file2 = fopen(argv[1], 'r');
+    infile = fopen(argv[1], 'r');
 
-    if (file2 == NULL) {
+    if (infile == NULL) {
         printf("ERROR: Failed to open %s\n", 'a');
         exit(1);
     }
-    
 
+    strcat(buff, argv[1]);
+
+    fd = open(buff, 0xc1);
+
+    if (fd == 0) {
+        printf("ERROR: Failed to open %s%s\n", "./backups", "/tt/a");
+        exit(1);
+    }
+
+    while (1) {
+        *(buff + 1) = fgetc(infile);
+        if (*(buff + 1) == -1) return -1;
+        write(fd, *(buff + 1), 1);
+    }
+    log_wrapper(backupfile, "Finished back up ", argv[1]);
+    fclose(backupfile);
+    close(fd);
+    return 0;
 }
