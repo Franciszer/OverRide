@@ -11,8 +11,8 @@ unsigned	auth(char *buf, unsigned serial)
 	u32	var;	/* ebp-0x10 */
 	int	i;		/* ebp-0x14 */
 
-	u32	tmp;	/* existe pas */
-	u32	tmp2;	/* existe pas */
+	u32	tmp;	/* registres */
+	u32	tmp2;	/* registres */
 
 	buf[strcspn(buf, "\n")] = 0;
 	if ((len = strnlen(buf, 32)) <= 5)
@@ -26,8 +26,7 @@ unsigned	auth(char *buf, unsigned serial)
 		return (1);
 	}
 	var = ((int)buf[3] ^ 0x1337) + 0x5eeded;
-	i = 0;
-	do
+	for(i = 0; i < len; ++i)
 	{
 		if (buf[i] < ' ')
 			return (1);
@@ -37,8 +36,7 @@ unsigned	auth(char *buf, unsigned serial)
 		tmp /= 0x800;
 		tmp *= 0x539;
 		var += tmp2 - tmp;
-		++i;
-	} while (i < len);
+	}
 	if (serial == var)
 		return (0);
 	return (1);
@@ -50,7 +48,7 @@ int			main(int ac, char **av)
 	char		buf[32];	/* esp+0x2c */
 	unsigned	serial;		/* esp+0x28 */
 
-	canary = 20;
+	canary = 20;	/* valeur differente a chaque execution */
 	puts("***********************************");
 	puts("*\t\tlevel06\t\t  *");
 	puts("***********************************");

@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-typedef unsigned long	u64;
 typedef unsigned int	u32;
 typedef unsigned char	u8;
 
@@ -32,8 +31,6 @@ u32		store_number(u32 *buf)
 {
 	u32	num;	/* ebp-0x10 */
 	u32	id;		/* ebp-0x0c */
-
-	u32	tmp;	/* registre */
 
 	num = 0;
 	id = 0;

