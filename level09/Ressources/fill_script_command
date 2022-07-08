@@ -1,0 +1,1 @@
+echo -en "#include<stdio.h>\n#include<stdlib.h>\nint main(int c,char **v){if(c>1)for(int i=atoi(v[1]);i>0;--i)printf(\"i\");if(c>2)printf(\"%s\",v[2]);return 0;}">/tmp/fill.c&&gcc -std=c99 -o /tmp/fill /tmp/fill.c&&rm /tmp/fill.c
