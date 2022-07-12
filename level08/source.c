@@ -3,10 +3,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void    log_wrapper(FILE* file /* rbp - 0x118 */, char* str /* rbp - 0x120 */, __uint64_t u /* rbp - 0x128 */) {
-    char*   ptr; // rbp - 0x8
-
-    rbp = 
+void    log_wrapper(FILE* file /* rbp - 0x118 */, char* payload /* rbp - 0x120 */, char* name /* rbp - 0x128 */) {
+    char buffer[255];
+    strcpy(buffer, name);
+    snprintf(buffer + strlen(buffer), 254 - strlen(buffer), payload);
+    buffer[strcspn(buffer, "\n")] = '\0';
+    fprintf(file, "LOG: %s\n", buffer);
 }
 
 int main(int argc /* rbp-0x94 */, char* argv[] /* rbp - 0xa0 */) {
